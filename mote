@@ -46,7 +46,7 @@ case "${1}" in
                 error "${DOTFILES_REPO} already exists"
             cmd git $GIT_ARGS config --local status.showUntrackedFiles no
             cmd git $GIT_ARGS checkout master || \
-                warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly replace existing files with ones from you repo."
+                warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly replace existing files with ones from your repo."
         fi
         ;;
     "add")
