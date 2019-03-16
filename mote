@@ -66,11 +66,12 @@ case "${1}" in
         info
         info "     Mote is a small wrapper around git for managing your dotfiles."
         info
-        info "Mote provides a few subcommands for convenience..."
+        info "Mote provides a few convenient subcommands to initialize or clone your"
+        info "dofiles repository and configure it correctly..."
         info
-        info "  - Initialize a new repository:     ${0} mote-init"
+        info "   ${0} mote-init"
         info
-        info "  - Clone an existing repository:    ${0} mote-clone <your_git_remote_url>"
+        info "   ${0} mote-clone <your_git_remote_url>"
         info
         warn "To display the git help text use ${0} --help"
         info
