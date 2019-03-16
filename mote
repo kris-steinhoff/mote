@@ -10,6 +10,8 @@ Green='\033[32m'        # Green
 Yellow='\033[33m'       # Yellow
 Bold='\033[1m'
 Dim='\033[2m'
+Underline='\033[4m'
+Underline_Off='\033[24m'
 
 MOTE_OUTPUT_PREFIX="${Dim}[MOTE]$Style_Off"
 
@@ -37,16 +39,22 @@ git_command() {
     cmd git ${GIT_ARGS} ${*}
 }
 
+
 case "${1}" in
     "start")
-        info start
         mkdir -p "$MOTE_DIR"
         if [ -z "${2}" ]; then
             cmd git init --bare "${DOTFILES_REPO}" ||
                 error "init failed"
             cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
                 error "config failed"
-            echo new repo created
+            info "New repository created. Use these commands to commit some files"
+            info "and push it to a fresh remote:"
+            info
+            info "${0} add $Underline\$HOME/.bashrc$Underline_Off"
+            info "${0} commit -m \"Add .bashrc\""
+            info "${0} remote add origin ${Underline}your_git_remote_url$Underline_Off"
+            info "${0} push -u origin master "
         else
             cmd git clone --bare "${2}" "${DOTFILES_REPO}" ||
                 error "clone failed"
