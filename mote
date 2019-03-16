@@ -46,13 +46,6 @@ case "${1}" in
             error "init failed"
         cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
             error "config failed"
-        info "New repository created. Use these commands to commit some files"
-        info "and push it to a fresh remote:"
-        info
-        info "${0} add <\$HOME/.bashrc>"
-        info "${0} commit -m \"Add .bashrc\""
-        info "${0} remote add origin <your_git_remote_url>"
-        info "${0} push -u origin master "
         ;;
     "mote-clone")
         cmd git clone --bare "${2}" "${DOTFILES_REPO}" ||
