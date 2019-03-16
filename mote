@@ -14,7 +14,9 @@ Dim='\033[2m'
 MOTE_OUTPUT_PREFIX="${Dim}[MOTE]$Style_Off"
 
 cmd () {
-    echo -e "${MOTE_OUTPUT_PREFIX} ${*}"
+    if [ ! -z $MOTE_DEBUG ] && [ $MOTE_DEBUG -ne 0 ]; then
+        echo -e "${MOTE_OUTPUT_PREFIX} ${*}"
+    fi
     ${*}
 }
 
