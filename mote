@@ -1,0 +1,53 @@
+#!/bin/bash
+
+MOTE_DIR="$HOME/.mote"
+DOTFILES_REPO="${MOTE_DIR}/dotfiles.git"
+GIT_ARGS="--git-dir=${DOTFILES_REPO} --work-tree=$HOME"
+
+Style_Off='\033[0m'
+Red='\033[31m'          # Red
+Green='\033[32m'        # Green
+Yellow='\033[33m'       # Yellow
+Bold='\033[1m'
+Dim='\033[2m'
+
+MOTE_OUTPUT_PREFIX="${Dim}[MOTE]$Style_Off"
+
+cmd () {
+    echo -e "${MOTE_OUTPUT_PREFIX} ${*}"
+    ${*}
+}
+
+info() {
+    echo -e "${MOTE_OUTPUT_PREFIX} $Bold$Green${*}$Style_Off"
+}
+
+warn() {
+    echo -e "${MOTE_OUTPUT_PREFIX} $Bold$Yellow${*}$Style_Off"
+}
+
+error() {
+    echo -e "${MOTE_OUTPUT_PREFIX} $Bold$Red${*}$Style_Off"
+    exit 1
+}
+
+case "${1}" in
+    "start")
+        info start
+        mkdir -p "$MOTE_DIR"
+        if [ -z "${2}" ]; then
+            cmd git init --bare "${DOTFILES_REPO}"
+            cmd git $GIT_ARGS config --local status.showUntrackedFiles no
+            echo new repo created
+        else
+            cmd git clone --bare "${2}" "${DOTFILES_REPO}" ||
+                error "${DOTFILES_REPO} already exists"
+            cmd git $GIT_ARGS config --local status.showUntrackedFiles no
+            cmd git $GIT_ARGS checkout master || \
+                warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly replace existing files with ones from you repo."
+        fi
+        ;;
+    *)
+        cmd git ${GIT_ARGS} ${*}
+        ;;
+esac
