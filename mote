@@ -49,6 +49,16 @@ case "${1}" in
                 warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly replace existing files with ones from you repo."
         fi
         ;;
+    "add")
+        # TODO This doesn't handle all cases (-A and --all, and these args in other positions)
+        if [ "${2}" == "-a" ]; then
+            warn "Looks like you're trying to stage all of your files. You probably don't want to do this."
+            warn
+            warn "Use this command to work around this warning: git $GIT_ARGS ${*}"
+        else
+            cmd git ${GIT_ARGS} ${*}
+        fi
+        ;;
     *)
         cmd git ${GIT_ARGS} ${*}
         ;;
