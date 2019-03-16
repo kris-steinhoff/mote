@@ -38,13 +38,16 @@ case "${1}" in
         info start
         mkdir -p "$MOTE_DIR"
         if [ -z "${2}" ]; then
-            cmd git init --bare "${DOTFILES_REPO}"
-            cmd git $GIT_ARGS config --local status.showUntrackedFiles no
+            cmd git init --bare "${DOTFILES_REPO}" ||
+                error "init failed"
+            cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
+                error "config failed"
             echo new repo created
         else
             cmd git clone --bare "${2}" "${DOTFILES_REPO}" ||
-                error "${DOTFILES_REPO} already exists"
-            cmd git $GIT_ARGS config --local status.showUntrackedFiles no
+                error "clone failed"
+            cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
+                error "config failed"
             cmd git $GIT_ARGS checkout master || \
                 warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly replace existing files with ones from your repo."
         fi
