@@ -63,6 +63,27 @@ case "${1}" in
             warn "Use \"${0} reset\" or \"${0} reset --hard\" to forcibly"
             warn "replace existing files with ones from your repo."
         ;;
+    "")
+        info
+        info '     __  __       _'
+        info '    |  \/  | ___ | |_ ___'
+        info '    | |\/| |/ _ \| __/ _ \\'
+        info '    | |  | | (_) | ||  __/'
+        info '    |_|  |_|\___/ \__\___|'
+        info
+        info "     Mote is a small wrapper around git for managing your dotfiles."
+        info
+        info "Mote provides a few subcommands for convenience..."
+        info
+        info "  - Initialize a new repository:     ${0} mote-init"
+        info
+        info "  - Clone an existing repository:    ${0} mote-clone <your_git_remote_url>"
+        info
+        warn "To display the git help text use ${0} --help"
+        info
+
+        exit 0
+        ;;
     *)
         git_command ${*}
         ;;
