@@ -43,4 +43,20 @@ Changes not staged for commit:
 	modified:   .vimrc
 
 no changes added to commit (use "git add" and/or "git commit -a")
+$ mote diff
+diff --git a/.vimrc b/.vimrc
+index b91355a..b3c1c54 100644
+--- a/.vimrc
++++ b/.vimrc
+@@ -56,6 +56,7 @@ set fillchars+=vert:\  " use space as vertical split char
+ 
+ set exrc
+ set showmode
++set number
+ 
+ set showcmd
+
+$ mote commit -a -m "Add set number"
+[master 13e902a] Add set number
+ 1 file changed, 1 insertion(+)
 ```
