@@ -16,11 +16,10 @@ Underline_Off='\033[24m'
 MOTE_OUTPUT_PREFIX="${Dim}[MOTE]$Style_Off"
 MOTE_COMMAND="`basename ${0}`"
 
-cmd () {
+debug() {
     if [ ! -z $MOTE_DEBUG ] && [ $MOTE_DEBUG -ne 0 ]; then
-        echo -e "${MOTE_OUTPUT_PREFIX} ${*}"
+        echo -e "${MOTE_OUTPUT_PREFIX} $@"
     fi
-    ${*}
 }
 
 info() {
@@ -36,8 +35,9 @@ error() {
     exit 1
 }
 
-git_command() {
-    cmd git ${GIT_ARGS} ${*}
+cmd () {
+    debug $*
+    ${@}
 }
 
 
@@ -54,8 +54,7 @@ case "${1}" in
         cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
             error "config failed"
         cmd git $GIT_ARGS checkout master || \
-            warn "Use \"${MOTE_COMMAND} reset\" or \"${MOTE_COMMAND} reset --hard\" to forcibly"
-            warn "replace existing files with ones from your repo."
+            warn "Use \"${MOTE_COMMAND} reset\" or \"${MOTE_COMMAND} reset --hard\" to forcibly replace existing files with ones from your repo."
         ;;
     "")
         info
@@ -80,6 +79,7 @@ case "${1}" in
         exit 0
         ;;
     *)
-        git_command ${*}
+        debug git ${GIT_ARGS} "$(printf '%q ' "$@")"
+        git ${GIT_ARGS} "${@}"
         ;;
 esac
