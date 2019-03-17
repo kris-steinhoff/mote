@@ -33,7 +33,7 @@ Other than those commands, mote is just a wrapper for git. So all normal git com
 
 ## Example
 
-```shell
+```
 $ mote status
 On branch master
 Changes not staged for commit:
