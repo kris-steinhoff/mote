@@ -53,8 +53,14 @@ case "${1}" in
             error "clone failed"
         cmd git $GIT_ARGS config --local status.showUntrackedFiles no ||
             error "config failed"
+        cmd git $GIT_ARGS config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" ||
+            error "config failed"
+        cmd git $GIT_ARGS fetch origin ||
+            error "fetch branches failed"
         cmd git $GIT_ARGS checkout master || \
             warn "Use \"${MOTE_COMMAND} reset\" or \"${MOTE_COMMAND} reset --hard\" to forcibly replace existing files with ones from your repo."
+        cmd git $GIT_ARGS branch --set-upstream-to=origin/master master ||
+            error "set upstream failed"
         ;;
     "")
         info
